@@ -10,7 +10,7 @@ class Note(models.Model):
     )
     mood = models.TextField(max_length=6, choices=CHOICES)
     text_note = models.TextField(max_length=250)
-    date = models.DateTimeField(auto_created=True)
+    date = models.DateTimeField(auto_now_add=True)
 
 
 
