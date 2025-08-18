@@ -13,10 +13,12 @@ class NoteListView(generic.ListView):
 
 class NoteCreateView(generic.CreateView):
     model = Note
-    form = NoteForm
+    form_class = NoteForm
     template_name = 'dairy/create_note.html'
+    success_url = reverse_lazy('dairy:note-list')
 
 
 class NoteDeleteView(generic.DeleteView):
     model = Note
     template_name = 'dairy/delete_note.html'
+    success_url = reverse_lazy('dairy:note-list')
