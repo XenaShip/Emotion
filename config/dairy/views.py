@@ -9,6 +9,11 @@ from .models import Note
 class NoteListView(generic.ListView):
     model = Note
     template_name = 'dairy/index.html'
+    ordering = ['-date']
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['total_notes'] = self.get_queryset().count()
+        return ctx
 
 
 class NoteCreateView(generic.CreateView):
