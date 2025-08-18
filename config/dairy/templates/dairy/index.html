@@ -1,10 +1,73 @@
+<!-- templates/dairy/index.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Мои заметки</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .actions {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            background: #4caf50;
+            color: white;
+        }
+        .btn-delete {
+            background: #e53935;
+        }
+        .note {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .note .mood {
+            font-size: 20px;
+        }
+        .note .date {
+            font-size: 12px;
+            color: gray;
+        }
+    </style>
 </head>
 <body>
+    <h1>Мои заметки</h1>
 
+    <div class="actions">
+        <a href="{% url 'dairy:note-create' %}" class="btn">➕ Новая запись</a>
+    </div>
+
+    {% if object_list %}
+        {% for note in object_list|dictsortreversed:"date" %}
+            <div class="note">
+                <span class="mood">{{ note.mood }}</span>
+                <p>{{ note.text_note }}</p>
+                <div class="date">{{ note.date|date:"d.m.Y H:i" }}</div>
+
+                <form action="{% url 'dairy:note-delete' note.pk %}" method="post" style="margin-top:10px;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-delete">🗑 Удалить</button>
+                </form>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Пока нет заметок.</p>
+    {% endif %}
 </body>
 </html>
