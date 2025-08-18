@@ -1,8 +1,8 @@
 from django.urls import path
 
-from .views import NoteListView, NoteCreateView
+from .views import NoteListView, NoteCreateView, NoteDeleteView
 
-app_name = 'dairy'  # ✅ это важно!
+app_name = 'dairy'
 
 urlpatterns = [
     path('', NoteListView.as_view(), name='note-list'),
